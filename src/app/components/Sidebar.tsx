@@ -9,8 +9,12 @@ import {
   Settings, 
   Home,
   Menu,
-  X 
+  X,
+  LogOut,
+  User,
+  ChevronDown
 } from 'lucide-react'
+import { useAuth } from './AuthContext'
 
 // Define what each navigation item looks like
 interface NavItem {
@@ -30,9 +34,26 @@ const navigation: NavItem[] = [
 export function Sidebar() {
   // State to control if sidebar is open on mobile
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
   
   // Get current page path to highlight active nav item
   const pathname = usePathname()
+  
+  // Get user data and logout function from auth context
+  const auth = useAuth()
+  const user = auth?.user
+  const logout = auth?.logout
+
+  const handleLogout = () => {
+    if (logout) {
+      logout()
+    }
+  }
+
+  // Don't render sidebar if no user
+  if (!user) {
+    return null
+  }
 
   return (
     <>
@@ -99,6 +120,28 @@ export function Sidebar() {
                         ))}
                       </ul>
                     </li>
+                    
+                    {/* Mobile User Menu */}
+                    <li className="mt-auto">
+                      <div className="border-t border-gray-200 pt-4">
+                        <div className="flex items-center px-2">
+                          <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
+                            <span className="text-sm font-medium text-white">{user.avatar}</span>
+                          </div>
+                          <div className="ml-3">
+                            <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                            <p className="text-xs text-gray-500">{user.role}</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={handleLogout}
+                          className="mt-3 w-full flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                        >
+                          <LogOut className="h-4 w-4 mr-3" />
+                          Sign Out
+                        </button>
+                      </div>
+                    </li>
                   </ul>
                 </nav>
               </div>
@@ -136,6 +179,50 @@ export function Sidebar() {
                     </li>
                   ))}
                 </ul>
+              </li>
+              
+              {/* Desktop User Menu */}
+              <li className="mt-auto">
+                <div className="relative">
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="w-full flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:bg-gray-50"
+                  >
+                    <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
+                      <span className="text-sm font-medium text-white">{user.avatar}</span>
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                      <p className="text-xs text-gray-500">{user.role}</p>
+                    </div>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {/* User Dropdown Menu */}
+                  {userMenuOpen && (
+                    <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                      <div className="p-1">
+                        <button
+                          onClick={() => {
+                            setUserMenuOpen(false)
+                            // You can add profile navigation here
+                          }}
+                          className="w-full flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                        >
+                          <User className="h-4 w-4 mr-3" />
+                          Profile Settings
+                        </button>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
+                        >
+                          <LogOut className="h-4 w-4 mr-3" />
+                          Sign Out
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </li>
             </ul>
           </nav>
