@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from './components/Sidebar';  // ADD THIS LINE
+import { AuthProvider } from './components/AuthContext';
+import { LayoutContent } from './components/LayoutContent';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dashboard App",                           // CHANGE THIS
-  description: "A modern dashboard with Next.js",  // CHANGE THIS
+  title: "Dashboard App",
+  description: "A modern dashboard with Next.js and authentication",
 };
 
 export default function RootLayout({
@@ -25,16 +26,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* ADD THE SIDEBAR STRUCTURE */}
-        <div>
-          <Sidebar />
-          <div className="lg:pl-72">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <AuthProvider>
+          <LayoutContent>
             {children}
-          </div>
-        </div>
+          </LayoutContent>
+        </AuthProvider>
       </body>
     </html>
   );
