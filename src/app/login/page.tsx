@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Lock, Mail, User, AlertCircle } from 'lucide-react'
 
-// Demo users for authentication
 const demoUsers = [
   {
     id: 1,
