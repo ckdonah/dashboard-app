@@ -22,7 +22,7 @@ import {
   TrendingUp, 
   TrendingDown, 
   Users, 
-  DollarSign, 
+  Euro,
   Eye, 
   MousePointer,
   Calendar,
@@ -65,7 +65,7 @@ const revenueData = [
   { month: 'Mar', revenue: 48000, expenses: 33000, profit: 15000 },
   { month: 'Apr', revenue: 61000, expenses: 38000, profit: 23000 },
   { month: 'May', revenue: 55000, expenses: 36000, profit: 19000 },
-  { month: 'Jun', users: 67000, expenses: 41000, profit: 26000 },
+  { month: 'Jun', revenue: 67000, expenses: 41000, profit: 26000 },
 ]
 
 // Traffic sources data
@@ -286,7 +286,7 @@ export default function AnalyticsPage() {
             value="€184,320"
             change="+18.2%"
             changeType="positive"
-            icon={<DollarSign className="h-6 w-6 text-green-600" />}
+            icon={<Euro className="h-6 w-6 text-green-600" />}
             subtitle="vs previous period"
           />
           <MetricCard
