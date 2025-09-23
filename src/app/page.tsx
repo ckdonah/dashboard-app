@@ -1,7 +1,6 @@
-import { BarChart3, Users, DollarSign, TrendingUp, Activity } from 'lucide-react'
+import { BarChart3, Users, Euro, TrendingUp, Activity } from 'lucide-react'
 import { AnalyticsChart } from './components/Chart'
 
-// Define TypeScript interfaces
 interface StatCardProps {
   title: string
   value: string
@@ -65,9 +64,8 @@ function RecentActivity() {
   )
 }
 
-// Main Dashboard Component (This is your page!)
 export default function Dashboard() {
-  // Sample data - in a real app, this would come from an API
+ 
   const stats = [
     {
       title: 'Total Users',
@@ -80,7 +78,7 @@ export default function Dashboard() {
       title: 'Revenue',
       value: '$23,456',
       change: '+8.2%',
-      icon: <DollarSign className="h-6 w-6 text-green-600" />,
+      icon: <Euro className="h-6 w-6 text-green-600" />,
       changeType: 'positive' as const
     },
     {
@@ -101,7 +99,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Page Header - No more navigation, just page title */}
+   
       <div className="bg-white shadow-sm border-b">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
@@ -116,24 +114,22 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Main Content - This is your dashboard content */}
       <main className="px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Grid - The 4 cards at the top */}
+     
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
             <StatCard key={index} {...stat} />
           ))}
         </div>
 
-        {/* Content Grid - Chart and Activity */}
+  
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Chart Section - Takes up 2/3 of the width */}
+        
           <div className="lg:col-span-2 bg-white rounded-lg p-6 shadow-sm border">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Analytics Overview</h3>
             <AnalyticsChart />
           </div>
 
-          {/* Recent Activity - Takes up 1/3 of the width */}
           <RecentActivity />
         </div>
       </main>
