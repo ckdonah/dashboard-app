@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { Search, Plus, MoreVertical, Mail, Phone, MapPin, X, Edit, Trash2, Save } from 'lucide-react'
 
-// Define what a User looks like (TypeScript Interface)
 interface User {
   id: number
   name: string
@@ -16,14 +15,14 @@ interface User {
   avatar: string
 }
 
-// German cities and phone numbers
+
 const germanCities = [
   'Berlin', 'Hamburg', 'Munich', 'Cologne', 'Frankfurt am Main',
   'Stuttgart', 'Düsseldorf', 'Leipzig', 'Dortmund', 'Essen',
   'Bremen', 'Dresden', 'Hanover', 'Nuremberg', 'Duisburg'
 ]
 
-// Default users data with German locations
+
 const defaultUsers: User[] = [
   {
     id: 1,
@@ -115,7 +114,6 @@ const defaultUsers: User[] = [
   }
 ]
 
-// Form data interface
 interface UserFormData {
   name: string
   email: string
@@ -125,7 +123,6 @@ interface UserFormData {
   phone: string
 }
 
-// Status Badge Component
 function StatusBadge({ status }: { status: 'active' | 'inactive' }) {
   return (
     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -138,7 +135,6 @@ function StatusBadge({ status }: { status: 'active' | 'inactive' }) {
   )
 }
 
-// User Modal Component (for both Add and Edit)
 function UserModal({ 
   isOpen, 
   onClose, 
@@ -161,7 +157,7 @@ function UserModal({
     phone: '+49 30 '
   })
 
-  // Load user data when editing
+
   useEffect(() => {
     if (mode === 'edit' && user) {
       setFormData({
@@ -173,7 +169,7 @@ function UserModal({
         phone: user.phone
       })
     } else {
-      // Reset form for add mode
+      
       setFormData({
         name: '',
         email: '',
@@ -190,7 +186,7 @@ function UserModal({
     if (formData.name && formData.email) {
       onSubmit(formData)
       if (mode === 'add') {
-        // Reset form only for add mode
+      
         setFormData({
           name: '',
           email: '',
@@ -466,7 +462,7 @@ export default function UsersPage() {
     }
   }, [users, nextId])
 
-  // Filter users based on search term
+ 
   const filteredUsers = users.filter(user => 
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -493,7 +489,6 @@ export default function UsersPage() {
     setIsModalOpen(false)
   }
 
-  // Edit existing user
   const handleEditUser = (userData: UserFormData) => {
     if (editingUser) {
       const updatedUser: User = {
@@ -650,7 +645,6 @@ export default function UsersPage() {
         </div>
       </main>
 
-      {/* User Modal (Add/Edit) */}
       <UserModal
         isOpen={isModalOpen}
         onClose={closeModal}
