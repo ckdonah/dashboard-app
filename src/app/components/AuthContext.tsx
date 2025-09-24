@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 
-// User interface
+
 interface User {
   id: number
   name: string
@@ -13,7 +13,7 @@ interface User {
   loginTime: string
 }
 
-// Auth context interface
+
 interface AuthContextType {
   user: User | null
   login: (user: User) => void
@@ -22,14 +22,11 @@ interface AuthContextType {
   isAuthenticated: boolean
 }
 
-// Create context
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-// Protected routes that require authentication
 const protectedRoutes = ['/', '/users', '/analytics', '/settings']
 const publicRoutes = ['/login']
 
-// Auth Provider Component
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -37,7 +34,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
 
-  // Check for existing session on mount
   useEffect(() => {
     const checkAuth = () => {
       console.log('🔍 Checking authentication...')
@@ -63,7 +59,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     checkAuth()
   }, [])
 
-  // Handle route protection - only after auth check is complete
   useEffect(() => {
     if (!isLoading && hasCheckedAuth) {
       console.log('🛡️ Checking route protection...', { 
@@ -92,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     console.log('🔑 Logging in user:', userData)
     setUser(userData)
     localStorage.setItem('dashboard-user', JSON.stringify(userData))
-    // Don't redirect here - let the useEffect handle it
+   
   }
 
   const logout = () => {
@@ -118,7 +113,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
 }
 
-// Hook to use auth context
 export function useAuth() {
   const context = useContext(AuthContext)
   if (context === undefined) {
@@ -127,7 +121,7 @@ export function useAuth() {
   return context
 }
 
-// Loading component
+
 export function AuthLoader() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
