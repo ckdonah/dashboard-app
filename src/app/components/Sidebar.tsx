@@ -16,30 +16,50 @@ import {
 } from 'lucide-react'
 import { useAuth } from './AuthContext'
 
-// Define what each navigation item looks like
+
 interface NavItem {
   name: string
   href: string
   icon: React.ReactNode
 }
 
-// List of navigation items
-const navigation: NavItem[] = [
-  { name: 'Dashboard', href: '/', icon: <Home className="h-5 w-5" /> },
-  { name: 'Analytics', href: '/analytics', icon: <BarChart3 className="h-5 w-5" /> },
-  { name: 'Users', href: '/users', icon: <Users className="h-5 w-5" /> },
-  { name: 'Settings', href: '/settings', icon: <Settings className="h-5 w-5" /> },
-]
+
+const getNavigationForRole = (role: string): NavItem[] => {
+  const baseNavigation = [
+    { name: 'Dashboard', href: '/', icon: <Home className="h-5 w-5" /> },
+  ]
+
+  switch (role) {
+    case 'Admin':
+      return [
+        ...baseNavigation,
+        { name: 'Analytics', href: '/analytics', icon: <BarChart3 className="h-5 w-5" /> },
+        { name: 'Users', href: '/users', icon: <Users className="h-5 w-5" /> },
+        { name: 'Settings', href: '/settings', icon: <Settings className="h-5 w-5" /> },
+      ]
+    case 'Manager':
+      return [
+        ...baseNavigation,
+        { name: 'Team Analytics', href: '/analytics', icon: <BarChart3 className="h-5 w-5" /> },
+        { name: 'Team Members', href: '/users', icon: <Users className="h-5 w-5" /> },
+      ]
+    case 'Developer':
+      return [
+        ...baseNavigation,
+        { name: 'Project Analytics', href: '/analytics', icon: <BarChart3 className="h-5 w-5" /> },
+      ]
+    default:
+      return baseNavigation
+  }
+}
 
 export function Sidebar() {
-  // State to control if sidebar is open on mobile
+  
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   
-  // Get current page path to highlight active nav item
   const pathname = usePathname()
   
-  // Get user data and logout function from auth context
   const auth = useAuth()
   const user = auth?.user
   const logout = auth?.logout
@@ -50,10 +70,11 @@ export function Sidebar() {
     }
   }
 
-  // Don't render sidebar if no user
   if (!user) {
     return null
   }
+
+  const navigation = getNavigationForRole(user.role)
 
   return (
     <>
@@ -74,7 +95,7 @@ export function Sidebar() {
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="relative z-50 lg:hidden">
-          {/* Background overlay */}
+        
           <div 
             className="fixed inset-0 bg-gray-900/80"
             onClick={() => setSidebarOpen(false)}
@@ -96,7 +117,7 @@ export function Sidebar() {
               {/* Mobile sidebar content */}
               <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                 <div className="flex h-16 shrink-0 items-center">
-                  {/* <h1 className="text-xl font-bold text-gray-900">MyDashboard</h1> */}
+                  <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
                 </div>
                 <nav className="flex flex-1 flex-col">
                   <ul className="flex flex-1 flex-col gap-y-7">
@@ -153,12 +174,11 @@ export function Sidebar() {
       {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
-          {/* Logo/Brand */}
-          <div className="flex h-16 shrink-0 items-center">
-            {/* <h1 className="text-xl font-bold text-gray-900">MyDashboard</h1> */}
-          </div>
           
-          {/* Navigation */}
+          <div className="flex h-16 shrink-0 items-center">
+            <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
+          </div>
+     
           <nav className="flex flex-1 flex-col">
             <ul className="flex flex-1 flex-col gap-y-7">
               <li>
@@ -205,7 +225,7 @@ export function Sidebar() {
                         <button
                           onClick={() => {
                             setUserMenuOpen(false)
-                            // You can add profile navigation here
+                            
                           }}
                           className="w-full flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md"
                         >
