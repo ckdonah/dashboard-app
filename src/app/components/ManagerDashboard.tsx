@@ -2,7 +2,6 @@
 
 import { Users, Euro, TrendingUp, Activity, Target, Calendar, Clock, CheckCircle } from 'lucide-react'
 
-// Define TypeScript interfaces
 interface StatCardProps {
   title: string
   value: string
@@ -12,7 +11,6 @@ interface StatCardProps {
   bgColor?: string
 }
 
-// Manager-themed Stat Card Component
 function ManagerStatCard({ title, value, change, icon, changeType, bgColor = "bg-blue-50" }: StatCardProps) {
   return (
     <div className="bg-white rounded-lg p-6 shadow-sm border hover:shadow-md transition-shadow">
@@ -37,7 +35,7 @@ function ManagerStatCard({ title, value, change, icon, changeType, bgColor = "bg
   )
 }
 
-// Team Performance Component
+
 function TeamPerformance() {
   const teamMembers = [
     { name: 'Klaus Weber', role: 'Developer', performance: 92, tasks: 24, status: 'excellent' },
@@ -88,7 +86,6 @@ function TeamPerformance() {
   )
 }
 
-// Team Goals Component
 function TeamGoals() {
   const goals = [
     { title: 'Q4 Revenue Target', progress: 78, target: '€75,000', current: '€58,500', status: 'on-track' },
@@ -133,7 +130,6 @@ function TeamGoals() {
   )
 }
 
-// Upcoming Meetings Component
 function UpcomingMeetings() {
   const meetings = [
     { title: 'Weekly Team Standup', time: 'Today, 10:00 AM', attendees: 6, type: 'team' },
@@ -229,10 +225,9 @@ export default function ManagerDashboard() {
         </div>
       </div>
 
-      {/* Main Content */}
+      
       <main className="px-4 sm:px-6 lg:px-8 py-8">
         
-        {/* Manager Alert */}
         <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
           <div className="flex items-center">
             <Target className="h-5 w-5 text-blue-600 mr-3" />
@@ -245,30 +240,29 @@ export default function ManagerDashboard() {
           </div>
         </div>
 
-        {/* Manager Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {managerStats.map((stat, index) => (
             <ManagerStatCard key={index} {...stat} />
           ))}
         </div>
 
-        {/* Manager Content Grid */}
+  
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Team Performance */}
+   
           <TeamPerformance />
 
-          {/* Team Goals */}
+
           <TeamGoals />
         </div>
 
-        {/* Second Row */}
+   
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Upcoming Meetings */}
+      
           <div className="lg:col-span-2">
             <UpcomingMeetings />
           </div>
 
-          {/* Quick Stats */}
+       
           <div className="bg-white rounded-lg p-6 shadow-sm border">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h3>
             <div className="space-y-4">
