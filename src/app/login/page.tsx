@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Lock, Mail, User, AlertCircle } from 'lucide-react'
 
+// Demo users for authentication
 const demoUsers = [
   {
     id: 1,
@@ -352,23 +353,55 @@ export default function LoginPage() {
   }
 
   const handleRegister = (data: RegisterFormData) => {
-    // In a real app, this would make an API call
-    // For demo, we'll create a new user and log them in
+    // Create new user with "User" role (not admin/manager/developer)
     const newUser = {
       id: Date.now(),
       name: data.name,
       email: data.email,
-      role: 'User',
-      avatar: data.name.split(' ').map(n => n[0]).join('').toUpperCase()
-    }
-
-    const userSession = {
-      ...newUser,
+      role: 'User', // Default role for new registrations
+      avatar: data.name.split(' ').map(n => n[0]).join('').toUpperCase(),
       loginTime: new Date().toISOString()
     }
 
+    console.log('📝 Creating new user account:', newUser)
+
+    // Save to localStorage so they can login
+    const existingUsers = localStorage.getItem('dashboard-registered-users')
+    let registeredUsers = []
+    
+    if (existingUsers) {
+      try {
+        registeredUsers = JSON.parse(existingUsers)
+      } catch (error) {
+        console.error('Error parsing registered users:', error)
+      }
+    }
+
+    // Add password to user data for future logins
+    const userWithPassword = {
+      ...newUser,
+      password: data.password
+    }
+
+    registeredUsers.push(userWithPassword)
+    localStorage.setItem('dashboard-registered-users', JSON.stringify(registeredUsers))
+
+    console.log('✅ User registered successfully, auto-logging in...')
+
+    // Auto-login the new user
+    const userSession = {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      role: newUser.role,
+      avatar: newUser.avatar,
+      loginTime: newUser.loginTime
+    }
+
     localStorage.setItem('dashboard-user', JSON.stringify(userSession))
-    router.push('/')
+    
+    // Force redirect to dashboard
+    window.location.href = '/'
   }
 
   return (
