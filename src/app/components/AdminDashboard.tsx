@@ -183,7 +183,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
+     
       <div className="bg-gradient-to-r from-red-600 to-orange-600 shadow-sm border-b">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
@@ -215,26 +215,22 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Admin Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {adminStats.map((stat, index) => (
             <AdminStatCard key={index} {...stat} />
           ))}
         </div>
 
-        {/* Admin Content Grid */}
+       
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* System Status */}
+         
           <SystemStatus />
 
-          {/* Admin Actions */}
           <AdminActions />
 
-          {/* Recent Activity */}
           <RecentAdminActivity />
         </div>
 
-        {/* Financial Overview - Admin Only */}
         <div className="bg-white rounded-lg p-6 shadow-sm border">
           <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
             <Euro className="h-5 w-5 text-red-600 mr-2" />
