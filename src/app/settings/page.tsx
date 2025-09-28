@@ -72,7 +72,6 @@ function ToggleSwitch({
   )
 }
 
-// Settings Section Component
 function SettingsSection({ 
   title, 
   icon, 
@@ -99,12 +98,12 @@ function SettingsSection({
   )
 }
 
-// Main Settings Page
+
 export default function SettingsPage() {
   const [settings, setSettings] = useState<UserSettings>(defaultSettings)
   const [isSaving, setIsSaving] = useState(false)
 
-  // Update individual setting
+  
   const updateSetting = (key: keyof UserSettings, value: any) => {
     setSettings(prev => ({
       ...prev,
@@ -112,7 +111,7 @@ export default function SettingsPage() {
     }))
   }
 
-  // Save settings (simulate API call)
+ 
   const handleSave = async () => {
     setIsSaving(true)
     // Simulate API delay
