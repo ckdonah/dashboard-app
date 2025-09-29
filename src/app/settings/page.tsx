@@ -132,8 +132,7 @@ export default function SettingsPage() {
               <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
               <p className="text-gray-600">Manage your account preferences and settings</p>
             </div>
-            
-            {/* Save Button */}
+         
             <button
               onClick={handleSave}
               disabled={isSaving}
@@ -146,10 +145,9 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Main Content */}
+     
       <main className="px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         
-        {/* Profile Settings */}
         <SettingsSection 
           title="Profile Settings" 
           icon={<User className="h-5 w-5 text-blue-600" />}
